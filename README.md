@@ -100,7 +100,7 @@ The `setup` function allows you to customize the plugin to your preferences. Bel
 ```lua
 require('no-cut').setup({
     d = true,  -- Remap 'd'
-    x = true,  -- Remap 'x'
+    x = false, -- Remap 'x' use x how 'd' with cut
     s = false, -- Keep default behavior for 's'
     c = true,  -- Remap 'c'
     dd = true, -- Remap 'dd'
