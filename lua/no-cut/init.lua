@@ -1,5 +1,3 @@
--- lua/no-cut/init.lua
-
 local M = {}
 
 -- Table for remapping options
@@ -51,6 +49,15 @@ function M.setup(opts)
 
 	-- Configure paste without copying
 	if M.options.paste_without_copy then
+		-- Handle normal mode paste
+		vim.keymap.set("n", "p", "p", { noremap = true, silent = true })
+		vim.keymap.set("n", "P", "P", { noremap = true, silent = true })
+
+		-- Handle visual mode paste
+		vim.keymap.set("v", "p", "p", { noremap = true, silent = true })
+		vim.keymap.set("v", "P", "P", { noremap = true, silent = true })
+	else
+		-- Preserve custom behavior for "p" to avoid copying replaced text
 		vim.keymap.set("n", "p", '"_dP', { noremap = true, silent = true })
 		vim.keymap.set("v", "p", '"_dP', { noremap = true, silent = true })
 	end
