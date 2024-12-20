@@ -1,0 +1,154 @@
+*nocut.nvim*
+
+No-Cut.nvim - Prevents text deletion commands from saving content to the clipboard.
+
+-------------------------------------------------------------------------------
+
+TABLE OF CONTENTS:
+
+1. Introduction ............................................... |nocut-intro|
+2. Installation ............................................. |nocut-install|
+3. Configuration .......................................... |nocut-config|
+4. Commands and Features .................................. |nocut-features|
+5. Usage Examples ......................................... |nocut-examples|
+6. License .................................................. |nocut-license|
+
+-------------------------------------------------------------------------------
+
+INTRODUCTION *nocut-intro*
+
+No-Cut.nvim is a lightweight Neovim plugin designed to ensure that text deletion, 
+replacement, and pasting commands do not overwrite the clipboard's current content.
+By default, operations such as `d`, `x`, `dd`, and `p` interact with the clipboard, 
+which can lead to accidental overwrites. This plugin remaps these commands to use the
+black hole register (`"_`), providing a seamless experience for users who want to
+preserve clipboard content.
+
+-------------------------------------------------------------------------------
+
+INSTALLATION *nocut-install*
+
+### Using packer.nvim
+
+```lua
+use {
+    'your-username/no-cut.nvim',
+    config = function()
+        require('no-cut').setup({
+            d = true,
+            x = true,
+            dd = true,
+            paste_without_copy = true,
+            exceptions = { "Y" }
+        })
+    end
+}
+```
+
+### Using lazy.nvim
+
+```lua
+{
+    'your-username/no-cut.nvim',
+    config = function()
+        require('no-cut').setup({
+            d = true,
+            x = true,
+            dd = true,
+            paste_without_copy = true,
+            exceptions = { "Y" }
+        })
+    end
+}
+```
+
+-------------------------------------------------------------------------------
+
+CONFIGURATION *nocut-config*
+
+The plugin provides a `setup()` function to customize its behavior. Below are 
+the configurable options:
+
+### Options:
+
+- **`d`, `x`, `s`, `c`, `dd`, `D`, `C`, `S`**:
+  - `true`: Remap the command to use the black hole register.
+  - `false`: Keep the command's default behavior.
+
+- **`visual_commands`**:
+  A table of commands to be remapped only in visual mode.
+
+  Example:
+  ```lua
+  visual_commands = {
+      d = true, -- Remap 'd' in visual mode
+      c = false -- Keep default behavior for 'c'
+  }
+  ```
+
+- **`exceptions`**:
+  A list of commands that should not be remapped, even if enabled.
+
+  Example:
+  ```lua
+  exceptions = { "Y" }
+  ```
+
+- **`paste_without_copy`**:
+  - `true`: When pasting, replaced text is not saved to the clipboard.
+  - `false`: Keep the default paste behavior.
+
+-------------------------------------------------------------------------------
+
+COMMANDS AND FEATURES *nocut-features*
+
+### Core Features:
+
+1. **Deletion without copying:**
+   Commands like `d`, `x`, `dd`, and `D` are remapped to use the black hole register, 
+   ensuring deleted text does not overwrite clipboard content.
+
+2. **Replacement without copying:**
+   Commands like `c`, `C`, and their visual mode equivalents follow the same logic.
+
+3. **Paste without copying:**
+   When pasting (`p` or `P`), replaced text is ignored and not saved to the clipboard.
+
+4. **Customizable Behavior:**
+   All commands can be individually enabled or disabled.
+
+5. **Exception Handling:**
+   Specify commands to exclude from remapping.
+
+-------------------------------------------------------------------------------
+
+USAGE EXAMPLES *nocut-examples*
+
+### Example 1: Deleting a line
+
+The `dd` command deletes a line without saving it to the clipboard:
+```vim
+    dd
+```
+
+### Example 2: Replacing text
+
+Highlight text in visual mode and press `c` to replace it. Deleted text will not 
+be saved to the clipboard:
+```vim
+    v{motion}c
+```
+
+### Example 3: Pasting
+
+When pasting (`p` or `P`), replaced text is not saved to the clipboard:
+```vim
+    p
+    P
+```
+
+-------------------------------------------------------------------------------
+
+LICENSE *nocut-license*
+
+No-Cut.nvim is licensed under the MIT License. See the LICENSE file for details.
