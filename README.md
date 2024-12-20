@@ -114,16 +114,10 @@ require('no-cut').setup({
     exceptions = { "Y" }, -- Exclude 'Y' from remapping
     paste_without_copy = true, -- Enable paste without copying
 })
--- Replace the 'x' key with 'd' in normal mode
+-- Replace the 'x' key with 'd'
 vim.keymap.set("n", "x", "d", { noremap = true, silent = true })
-
--- Replace the 'X' key with 'D' in normal mode (delete to the end of the line)
 vim.keymap.set("n", "X", "D", { noremap = true, silent = true })
-
--- Replace the 'x' key with 'd' in visual mode
 vim.keymap.set("v", "x", "d", { noremap = true, silent = true })
-
--- Replace the 'X' key with 'D' in visual mode (delete to the end of the line)
 vim.keymap.set("v", "X", "D", { noremap = true, silent = true })
 ```
 
