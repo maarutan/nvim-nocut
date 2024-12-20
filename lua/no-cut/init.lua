@@ -2,30 +2,30 @@
 
 local M = {}
 
--- Таблица для настройки переназначений
+-- Table for remapping options
 M.options = {
-	d = true, -- Включить переназначение для команды 'd'
-	x = true, -- Включить переназначение для команды 'x'
-	s = true, -- Включить переназначение для команды 's'
-	c = true, -- Включить переназначение для команды 'c'
-	dd = true, -- Включить переназначение для команды 'dd'
-	D = true, -- Включить переназначение для команды 'D'
-	C = true, -- Включить переназначение для команды 'C'
-	S = true, -- Включить переназначение для команды 'S'
+	d = true, -- Enable remapping for the 'd' command
+	x = true, -- Enable remapping for the 'x' command
+	s = true, -- Enable remapping for the 's' command
+	c = true, -- Enable remapping for the 'c' command
+	dd = true, -- Enable remapping for the 'dd' command
+	D = true, -- Enable remapping for the 'D' command
+	C = true, -- Enable remapping for the 'C' command
+	S = true, -- Enable remapping for the 'S' command
 	visual_commands = {
-		d = true, -- Включить переназначение для 'd' в визуальном режиме
-		c = true, -- Включить переназначение для 'c' в визуальном режиме
+		d = true, -- Enable remapping for 'd' in visual mode
+		c = true, -- Enable remapping for 'c' in visual mode
 	},
-	exceptions = { "Y" }, -- Команды, которые не нужно переназначать
-	paste_without_copy = true, -- Отключить копирование текста при вставке
+	exceptions = { "Y" }, -- Commands that should not be remapped
+	paste_without_copy = true, -- Disable copying text during paste
 }
 
--- Функция настройки плагина
+-- Function to configure the plugin
 function M.setup(opts)
-	-- Объединяем пользовательские настройки с дефолтными
+	-- Merge user settings with defaults
 	M.options = vim.tbl_deep_extend("force", M.options, opts or {})
 
-	-- Настраиваем команды в нормальном режиме
+	-- Configure commands in normal mode
 	for cmd, enabled in pairs(M.options) do
 		if
 			enabled
@@ -40,7 +40,7 @@ function M.setup(opts)
 		end
 	end
 
-	-- Настраиваем команды в визуальном режиме, если они включены
+	-- Configure commands in visual mode if enabled
 	if M.options.visual_commands then
 		for cmd, enabled in pairs(M.options.visual_commands) do
 			if enabled then
@@ -49,13 +49,13 @@ function M.setup(opts)
 		end
 	end
 
-	-- Настраиваем вставку без копирования
+	-- Configure paste without copying
 	if M.options.paste_without_copy then
 		vim.keymap.set("n", "p", '"_dP', { noremap = true, silent = true })
 		vim.keymap.set("v", "p", '"_dP', { noremap = true, silent = true })
 	end
 
-	print("No-Cut: Команды успешно переназначены")
+	print("No-Cut: Commands successfully remapped")
 end
 
 return M
