@@ -46,7 +46,11 @@ use {
 
 ```lua
 {
+<<<<<<< HEAD
     'maarutan/nvim-nocut',
+=======
+    'maarutan/no-cut.nvim',
+>>>>>>> origin/main
     config = function()
         require('no-cut').setup({
             d = true,
@@ -65,7 +69,7 @@ use {
 
 The `setup` function allows you to customize the plugin to your preferences. Below are the available options:
 
-### Options:
+### Options
 
 - **`d`, `x`, `s`, `c`, `dd`, `D`, `C`, `S`:**
 
@@ -95,11 +99,15 @@ The `setup` function allows you to customize the plugin to your preferences. Bel
   - `true`: When pasting, replaced text is not saved to the clipboard.
   - `false`: Keep the default paste behavior.
 
----
+## <<<<<<< HEAD
 
 ### Full Example Configuration
 
-Here is an example configuration that demonstrates the plugin's flexibility:
+# Here is an example configuration that demonstrates the plugin's flexibility:
+
+### Full Example Configuration
+
+> > > > > > > origin/main
 
 ```lua
 require('no-cut').setup({
