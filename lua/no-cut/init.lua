@@ -38,11 +38,11 @@ function M.setup(opts)
 		end
 	end
 
-	-- Configure commands in visual mode if enabled
+	-- Configure commands in all visual modes if enabled
 	if M.options.visual_commands then
 		for cmd, enabled in pairs(M.options.visual_commands) do
 			if enabled then
-				vim.keymap.set("v", cmd, '"_' .. cmd, { noremap = true, silent = true })
+				vim.keymap.set("x", cmd, '"_' .. cmd, { noremap = true, silent = true }) -- 'x' covers all visual modes
 			end
 		end
 	end
@@ -53,13 +53,13 @@ function M.setup(opts)
 		vim.keymap.set("n", "p", "p", { noremap = true, silent = true })
 		vim.keymap.set("n", "P", "P", { noremap = true, silent = true })
 
-		-- Handle visual mode paste
-		vim.keymap.set("v", "p", "p", { noremap = true, silent = true })
-		vim.keymap.set("v", "P", "P", { noremap = true, silent = true })
+		-- Handle visual mode paste for all visual modes
+		vim.keymap.set("x", "p", "p", { noremap = true, silent = true })
+		vim.keymap.set("x", "P", "P", { noremap = true, silent = true })
 	else
 		-- Preserve custom behavior for "p" to avoid copying replaced text
 		vim.keymap.set("n", "p", '"_dP', { noremap = true, silent = true })
-		vim.keymap.set("v", "p", '"_dP', { noremap = true, silent = true })
+		vim.keymap.set("x", "p", '"_dP', { noremap = true, silent = true })
 	end
 
 	print("No-Cut: Commands successfully remapped")
