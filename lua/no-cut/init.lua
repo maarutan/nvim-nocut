@@ -1,29 +1,28 @@
 local M = {}
 
--- Table for remapping options
+-- Default configuration options
 M.options = {
-	d = true, -- Enable remapping for the 'd' command
-	x = true, -- Enable remapping for the 'x' command
-	s = true, -- Enable remapping for the 's' command
-	c = true, -- Enable remapping for the 'c' command
-	dd = true, -- Enable remapping for the 'dd' command
-	D = true, -- Enable remapping for the 'D' command
-	C = true, -- Enable remapping for the 'C' command
-	S = true, -- Enable remapping for the 'S' command
+	d = true, -- Remap 'd' to avoid copying to clipboard
+	x = true, -- Remap 'x' to avoid copying to clipboard
+	s = true, -- Remap 's' to avoid copying to clipboard
+	c = true, -- Remap 'c' to avoid copying to clipboard
+	dd = true, -- Remap 'dd' to avoid copying to clipboard
+	D = true, -- Remap 'D' to avoid copying to clipboard
+	C = true, -- Remap 'C' to avoid copying to clipboard
 	visual_commands = {
-		d = true, -- Enable remapping for 'd' in visual mode
-		c = true, -- Enable remapping for 'c' in visual mode
+		d = true, -- Remap 'd' in visual mode
+		c = true, -- Remap 'c' in visual mode
 	},
-	exceptions = { "Y" }, -- Commands that should not be remapped
-	paste_without_copy = true, -- Disable copying text during paste
+	exceptions = { "Y" }, -- Commands to exclude from remapping
+	paste_without_copy = true, -- Prevent copying replaced text during paste
 }
 
 -- Function to configure the plugin
 function M.setup(opts)
-	-- Merge user settings with defaults
+	-- Merge user options with defaults
 	M.options = vim.tbl_deep_extend("force", M.options, opts or {})
 
-	-- Configure commands in normal mode
+	-- Remap normal mode commands
 	for cmd, enabled in pairs(M.options) do
 		if
 			enabled
@@ -38,31 +37,24 @@ function M.setup(opts)
 		end
 	end
 
-	-- Configure commands in all visual modes if enabled
+	-- Remap visual mode commands
 	if M.options.visual_commands then
 		for cmd, enabled in pairs(M.options.visual_commands) do
 			if enabled then
-				vim.keymap.set("x", cmd, '"_' .. cmd, { noremap = true, silent = true }) -- 'x' covers all visual modes
+				vim.keymap.set("x", cmd, '"_' .. cmd, { noremap = true, silent = true })
 			end
 		end
 	end
 
-	-- Configure paste without copying
+	-- Handle paste without copying replaced text
 	if M.options.paste_without_copy then
-		-- Handle normal mode paste
-		vim.keymap.set("n", "p", "p", { noremap = true, silent = true })
-		vim.keymap.set("n", "P", "P", { noremap = true, silent = true })
-
-		-- Handle visual mode paste for all visual modes
-		vim.keymap.set("x", "p", "p", { noremap = true, silent = true })
-		vim.keymap.set("x", "P", "P", { noremap = true, silent = true })
-	else
-		-- Preserve custom behavior for "p" to avoid copying replaced text
 		vim.keymap.set("n", "p", '"_dP', { noremap = true, silent = true })
+		vim.keymap.set("n", "P", '"_dP', { noremap = true, silent = true })
 		vim.keymap.set("x", "p", '"_dP', { noremap = true, silent = true })
+		vim.keymap.set("x", "P", '"_dP', { noremap = true, silent = true })
 	end
 
-	print("No-Cut: Commands successfully remapped")
+	print("No-Cut.nvim: Commands remapped successfully.")
 end
 
 return M
