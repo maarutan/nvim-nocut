@@ -53,8 +53,6 @@ function M.setup(opts)
 		vim.keymap.set("x", "p", '"_dP', { noremap = true, silent = true })
 		vim.keymap.set("x", "P", '"_dP', { noremap = true, silent = true })
 	end
-
-	print("No-Cut.nvim: Commands remapped successfully.")
 end
 
 return M
