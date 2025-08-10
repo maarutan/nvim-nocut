@@ -53,7 +53,8 @@ function M.setup(opts)
 		if M.options.paste_without_copy then
 			vim.keymap.set("n", "p", "P", _opts)
 			vim.keymap.set("n", "P", "P", _opts)
-			vim.keymap.set("x", "p", '"_dP', _opts)
+
+			vim.keymap.set("x", "p", '"_dp', _opts)
 			vim.keymap.set("x", "P", '"_dP', _opts)
 		end
 	end
