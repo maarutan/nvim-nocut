@@ -16,6 +16,7 @@ M.options = {
 	exceptions = { "Y" }, -- Commands to exclude from remapping
 	paste_without_copy = true, -- Prevent copying replaced text during paste
 }
+local _opts = { noremap = true, silent = true }
 
 -- Function to configure the plugin
 function M.setup(opts)
@@ -34,7 +35,7 @@ function M.setup(opts)
 				and type(enabled) == "boolean"
 			then
 				if not vim.tbl_contains(M.options.exceptions, cmd) then
-					vim.keymap.set("n", cmd, '"_' .. cmd, { noremap = true, silent = true })
+					vim.keymap.set("n", cmd, '"_' .. cmd, _opts)
 				end
 			end
 		end
@@ -43,18 +44,17 @@ function M.setup(opts)
 		if M.options.visual_commands then
 			for cmd, enabled in pairs(M.options.visual_commands) do
 				if enabled then
-					vim.keymap.set("x", cmd, '"_' .. cmd, { noremap = true, silent = true })
+					vim.keymap.set("x", cmd, '"_' .. cmd, _opts)
 				end
 			end
 		end
 
 		-- Handle paste without copying replaced text
 		if M.options.paste_without_copy then
-			vim.keymap.set("n", "p", "p", { noremap = true, silent = true })
-			vim.keymap.set("n", "P", "P", { noremap = true, silent = true })
-
-			vim.keymap.set("x", "p", '"_dP`[', { noremap = true, silent = true })
-			vim.keymap.set("x", "P", '"_dP`[', { noremap = true, silent = true })
+			vim.keymap.set("n", "p", "P", _opts)
+			vim.keymap.set("n", "P", "P", _opts)
+			vim.keymap.set("x", "p", '"_dP', _opts)
+			vim.keymap.set("x", "P", '"_dP', _opts)
 		end
 	end
 
