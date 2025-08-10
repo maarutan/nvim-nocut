@@ -52,8 +52,9 @@ function M.setup(opts)
 		if M.options.paste_without_copy then
 			vim.keymap.set("n", "p", "p", { noremap = true, silent = true })
 			vim.keymap.set("n", "P", "P", { noremap = true, silent = true })
-			vim.keymap.set("x", "p", '"_dP', { noremap = true, silent = true })
-			vim.keymap.set("x", "P", '"_dP', { noremap = true, silent = true })
+
+			vim.keymap.set("x", "p", '"_dP`[', { noremap = true, silent = true })
+			vim.keymap.set("x", "P", '"_dP`[', { noremap = true, silent = true })
 		end
 	end
 
