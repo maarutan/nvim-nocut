@@ -51,7 +51,7 @@ function M.setup(opts)
 
 		-- Handle paste without copying replaced text
 		if M.options.paste_without_copy then
-			vim.keymap.set("n", "p", "P", _opts)
+			vim.keymap.set("n", "p", "p", _opts)
 			vim.keymap.set("n", "P", "P", _opts)
 
 			vim.keymap.set("x", "p", '"_dp', _opts)
